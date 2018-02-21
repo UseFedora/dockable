@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require "dockable"
+
+vars = Dockable.load_environment_variables(
+  bucket:  ENV["DOCKABLE_ENV_BUCKET_NAME"],
+  key:     ENV["DOCKABLE_ENV_KEY_NAME"],
+)
+
+Dir.chdir(ENV["DOCKABLE_ROOT_DIR"]) if ENV["DOCKABLE_ROOT_DIR"]
+
+cmd = Dockable.load_command(ARGV, procfile_location: ENV["DOCKABLE_PROCFILE_LOCATION"])
+
+Kernel.exec(vars, *cmd)
