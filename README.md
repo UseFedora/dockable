@@ -28,6 +28,14 @@ You can run puma like this:
 $ dockable web
 ```
 
+### Loading environment variables from Systems Manager Parameter Store
+
+If you've added `DOCKABLE_ENV_SSM_PREFIX` as an environment variable, dockable will look for all values in the AWS Parameter store that begin with that prefix and load them as environment variables.
+
+For instance, if I had `/production/staff` set as my `DOCKABLE_ENV_SSM_Prefix` and had the parameter `/production/staff/follower_database_url` set with the value `postgres://funtime.com`, dockable will load that as `FOLLOWER_DATABASE_URL=postgres://funtime.com`
+
+_Please Note: setting `DOCKABLE_ENV_SSM_PREFIX` will take precendence over loading environment variables from S3_
+
 ### Loading environment variables from S3
 
 If you've specified the `DOCKABLE_ENV_BUCKET_NAME` and `DOCKABLE_ENV_KEY_NAME` variables, it will try to download an environment file from that location.
